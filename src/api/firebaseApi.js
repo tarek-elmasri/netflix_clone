@@ -1,31 +1,25 @@
-import { initializeApp } from "firebase/app";
-import {
-  getAuth,
-  createUserWithEmailAndPassword,
-  signInWithEmailAndPassword,
-  onAuthStateChanged,
-  signOut,
-} from "firebase/auth";
-import { getFirestore } from "firebase/firestore";
+import firebase from "firebase/compat/app"
+import "firebase/compat/auth"
+import "firebase/compat/firestore"
 import { firebaseConfig } from "../config";
 
-const app = initializeApp(firebaseConfig);
-const db = getFirestore(app);
-const auth = getAuth(app);
+firebase.initializeApp(firebaseConfig);
+const auth = firebase.auth();
+const db = firebase.firestore()
+
 const registerUser = ({ email, password }) =>
-  createUserWithEmailAndPassword(auth, email, password);
+  auth.createUserWithEmailAndPassword(email, password);
 
-const login = ({ email, password }) =>
-  signInWithEmailAndPassword(auth, email, password);
+const login = ({ email, password }) => auth.signInWithEmailAndPassword(email, password);
 
-const onUserStateChange = (callbackFn) => onAuthStateChanged(auth, callbackFn);
+const onUserStateChange = (callbackFn) => auth.onAuthStateChanged(callbackFn);
 
-const logout = () => signOut(auth);
+const logout = () => auth.signOut();
 
 export default {
   registerUser,
-  db,
   login,
   logout,
   onUserStateChange,
+  db
 };

@@ -3,8 +3,8 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { setUser, removeUser } from "./features/userSlice";
 import { firebaseApi } from "./api";
-import { HomeScreen, LoginScreen } from "./pages/";
-import { PrivateRoute } from "./components";
+import { HomeScreen, LoginScreen, ProfileScreen } from "./pages/";
+import { Loader, PrivateRoute } from "./components";
 
 function App() {
   const dispatch = useDispatch();
@@ -22,14 +22,16 @@ function App() {
     return unsubscribe;
   }, [dispatch]);
 
-  if (user.isLoading) return <h1 style={{ color: "red" }}>Loading ...</h1>;
+  if (user.isLoading) return <Loader />;
 
   return (
     <Router>
       <Routes>
         <Route path="/" element={<PrivateRoute />}>
           <Route path="/" element={<HomeScreen />} />
+          <Route path="profile" element={<ProfileScreen />} />
         </Route>
+
         <Route path="/login" element={<LoginScreen />} />
       </Routes>
     </Router>

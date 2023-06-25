@@ -19,7 +19,7 @@
 
 .banner_description {
   height: 80px;
-  width: 45rem;
+  width: min(45rem, 80%);
   max-width: 360px;
   padding-top: 1rem;
   font-size: 0.8rem;

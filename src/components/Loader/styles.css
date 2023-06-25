@@ -1,0 +1,29 @@
+.loader{
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+}
+
+.loader > img { 
+  width: 100%;
+  max-width: 400px; 
+  margin-inline: auto;
+  animation: logo 2s infinite;
+}
+
+@keyframes logo{
+  0%{
+    opacity: 1;
+  }
+
+  50%{
+    opacity: 0.2;
+  }
+
+  100%{
+    opacity: 1;
+  }
+}
+
+
+
