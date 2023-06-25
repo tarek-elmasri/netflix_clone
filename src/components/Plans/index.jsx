@@ -51,6 +51,7 @@ const Plans = () => {
   }, [user.id]);
 
   const loadCheckout = async (priceId) => {
+    console.log(priceId);
     const docRef = await firebaseApi.db
       .collection("customers")
       .doc(user.id)
@@ -109,7 +110,7 @@ const Plans = () => {
 
             <button
               disabled={isCurrentPackage}
-              onClick={() => loadCheckout(productData.prices.priceId)}
+              onClick={() => loadCheckout(productData?.prices?.priceId)}
             >
               {isCurrentPackage ? "Current Package" : "Subscripe"}
             </button>
