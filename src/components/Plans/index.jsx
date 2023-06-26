@@ -4,11 +4,13 @@ import { loadStripe } from "@stripe/stripe-js";
 import firebaseApi from "../../api/firebaseApi";
 import { Loader } from "../";
 import "./styles.css";
+import { PulseLoader } from "react-spinners";
 
-const Plans = ({ setIsRedirected }) => {
+const Plans = () => {
   const user = useSelector((state) => state.user);
   const [products, setProducts] = useState({});
   const [subscription, setSubscription] = useState(null);
+  const [isRedirecting, setIsRedirecting] = useState(null);
 
   useEffect(() => {
     firebaseApi.db
@@ -52,7 +54,7 @@ const Plans = ({ setIsRedirected }) => {
   }, [user.id]);
 
   const loadCheckout = async (priceId) => {
-    setIsRedirected(true);
+    setIsRedirecting(priceId);
 
     const docRef = await firebaseApi.db
       .collection("customers")
@@ -112,10 +114,16 @@ const Plans = ({ setIsRedirected }) => {
             </div>
 
             <button
-              disabled={isCurrentPackage}
+              disabled={isCurrentPackage || isRedirecting}
               onClick={() => loadCheckout(productData?.prices?.priceId)}
             >
-              {isCurrentPackage ? "Current Package" : "Subscripe"}
+              {isRedirecting === productData?.prices?.priceId ? (
+                <PulseLoader size={10} color="#fff" />
+              ) : isCurrentPackage ? (
+                "Current Package"
+              ) : (
+                "Subscripe"
+              )}
             </button>
           </div>
         );

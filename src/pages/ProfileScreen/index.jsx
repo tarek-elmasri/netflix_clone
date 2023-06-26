@@ -8,10 +8,10 @@ import "./styles.css";
 const ProfileScreen = () => {
   const user = useSelector((state) => state.user);
 
-  const [isRedirected, setIsRedirected] = useState(false);
+  // const [isRedirected, setIsRedirected] = useState(false);
 
-  if (isRedirected)
-    return <Loader message="Please wait while generating your payment." />;
+  // if (isRedirected)
+  //   return <Loader message="Please wait while generating your payment." />;
 
   return (
     <div className="profile">
@@ -24,7 +24,7 @@ const ProfileScreen = () => {
             <h2 style={{ color: "#fff" }}>{user.email}</h2>
             <div className="profile__plans">
               <h3>Plans</h3>
-              <Plans setIsRedirected={setIsRedirected} />
+              <Plans /*setIsRedirected={setIsRedirected}*/ />
               <button
                 className="profile__signout"
                 onClick={() => firebaseApi.logout()}
