@@ -1,6 +1,8 @@
 .loader{
   min-height: 100vh;
   display: flex;
+  flex-direction: column;
+  justify-content: center;
   align-items: center;
 }
 
@@ -9,6 +11,10 @@
   max-width: 400px; 
   margin-inline: auto;
   animation: logo 2s infinite;
+}
+
+.loader > p{
+  color: #fff;
 }
 
 @keyframes logo{

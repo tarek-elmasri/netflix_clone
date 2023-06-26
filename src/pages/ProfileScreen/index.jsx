@@ -1,12 +1,18 @@
-import React from "react";
-import { Navbar, Plans } from "../../components";
+import { useState } from "react";
+import { useSelector } from "react-redux";
+import { Loader, Navbar, Plans } from "../../components";
+import firebaseApi from "../../api/firebaseApi";
 import avatarImg from "../../assets/avatar.png";
 import "./styles.css";
-import { useSelector } from "react-redux";
-import firebaseApi from "../../api/firebaseApi";
 
 const ProfileScreen = () => {
   const user = useSelector((state) => state.user);
+
+  const [isRedirected, setIsRedirected] = useState(false);
+
+  if (isRedirected)
+    return <Loader message="Please wait while generating your payment." />;
+
   return (
     <div className="profile">
       <Navbar />
@@ -18,7 +24,7 @@ const ProfileScreen = () => {
             <h2 style={{ color: "#fff" }}>{user.email}</h2>
             <div className="profile__plans">
               <h3>Plans</h3>
-              <Plans />
+              <Plans setIsRedirected={setIsRedirected} />
               <button
                 className="profile__signout"
                 onClick={() => firebaseApi.logout()}

@@ -2,9 +2,10 @@ import { useState, useEffect } from "react";
 import { useSelector } from "react-redux";
 import { loadStripe } from "@stripe/stripe-js";
 import firebaseApi from "../../api/firebaseApi";
+import { Loader } from "../";
 import "./styles.css";
 
-const Plans = () => {
+const Plans = ({ setIsRedirected }) => {
   const user = useSelector((state) => state.user);
   const [products, setProducts] = useState({});
   const [subscription, setSubscription] = useState(null);
@@ -51,7 +52,8 @@ const Plans = () => {
   }, [user.id]);
 
   const loadCheckout = async (priceId) => {
-    console.log(priceId);
+    setIsRedirected(true);
+
     const docRef = await firebaseApi.db
       .collection("customers")
       .doc(user.id)
@@ -66,6 +68,7 @@ const Plans = () => {
       const { sessionId, error } = snap.data();
 
       if (error) {
+        setIsRedirected(false);
         alert(`An error occured: ${error.message}`);
       }
 
